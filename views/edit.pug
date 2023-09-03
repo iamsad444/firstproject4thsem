@@ -1,0 +1,29 @@
+
+block scripts 
+   script(src='../app.js')
+
+block style
+  style 
+    include ../static/elearn.css
+
+block content
+  h1 Edit to Our Courses Page
+  h4 User ID: #{userId}
+  p Course ID: #{courseId}
+
+
+
+  form#enroll-form(action=`/courses/edit/${courseId}`, method="post")
+        div
+          label(for="title") Course Title:
+          br
+          input#title(type="text", name="title", value=course.title required)
+        div
+          label(for="description") Description:
+          br
+          input#description(type="text", name="description", value=course.description required)
+        div
+          label(for="duration") Duration:
+          br
+          input#duration(type="text", name="duration", value=course.duration required)
+        button(type="submit") Update Course

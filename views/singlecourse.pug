@@ -1,0 +1,20 @@
+html
+  head
+    title ELearning | #{course.title}
+  body
+    div.singlcors
+      h1 #{course.title}
+      p Description: #{course.description}
+      p Duration: #{course.duration} weeks
+
+      h2 Instructor Information
+      p Full Name: #{course.instructor.fullname}
+      p Phone Number: #{course.instructor.phoneno}
+      p Email: #{course.instructor.email}
+
+      if course.enrolledStudents.length >= 1
+        h2 Enrolled Students
+        each student in course.enrolledStudents
+          p Full Name: #{student.fullname}
+          p Phone Number: #{student.phoneno}
+          p Email: #{student.email}

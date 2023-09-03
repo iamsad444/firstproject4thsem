@@ -1,0 +1,54 @@
+extends base.pug
+
+block scripts 
+   script(src='../app.js')
+
+block style
+  style 
+    include ../static/elearn.css
+
+
+block content
+  div.crses
+    each course in courses
+      div.crse
+        a(href=`/courses/${course._id}`)
+          img.cimg(src='../static/photos/homeimg2.gif' alt='Noimagefound')
+          div.ct= course.title
+          div.cd= course.description
+          div.cdd= course.duration
+          div.cl= course.enrolledStudents.length
+          div.ci= course.instructor ? course.instructor.fullname : "Unknown Instructor"
+          div.btns1
+            if course.instructor && course.instructor._id.toString() === userId.toString()
+              a.btn1(href=`/courses/edit/${course._id}`) Edit
+              br
+              a.btn2(href=`/courses/delete/${course._id}`) Delete
+              br
+            else if course.enrolledStudents && course.enrolledStudents.length > 0
+              - let userEnrolled = course.enrolledStudents.some(student => student._id.toString() === userId.toString())
+              if (userEnrolled)
+                a.btn3(href=`/unenroll/${course._id}`) Enrolled
+              else
+                a.btn3(href=`/enroll/${course._id}`) Enroll
+            else
+              a.btn3(href=`/enroll/${course._id}`) Enroll
+
+
+
+
+
+  form#enroll-form(action="/courses", method="post")
+        div
+          label(for="title") Course Title:
+          br
+          input#title(type="text", name="title", required)
+        div
+          label(for="description") Description:
+          br
+          input#description(type="text", name="description", required)
+        div
+          label(for="duration") Duration:
+          br
+          input#duration(type="text", name="duration", required)
+        button(type="submit") Create Course
